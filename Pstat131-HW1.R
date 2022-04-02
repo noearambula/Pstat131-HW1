@@ -1,0 +1,11 @@
+# install.packages("tidyverse")
+# install.packages("tidymodels")
+# install.packages("ISLR")
+
+library(tidyverse)
+library(tidymodels)
+library(ISLR)
+
+eval = TRUE
+# ?mpg
+mpg
