@@ -1,15 +1,71 @@
 ---
 output:
-  pdf_document:
-    toc: true
   html_document:
     toc: true
     toc_float: true
+  pdf_document:
+    toc: true
 ---
 
 # Homework 1 Pstat 131
 
 ## Noe Arambula ID: 3561131
+
+# Conceptual Questions
+
+## Question 1: Define supervised and unsupervised learning. What are the difference(s) between them?
+
+Supervised learning is when we know the outcome/results (Y). We use the given predictors in order to try and find future responses, as mentioned in lecture. We use the results in order to see how good our model predicts each result( we fit our model).
+
+In unsupervised learning we do not have any results/reponses and are trying to learn using only the given predictors. An example model would be clustering while an example model we would use in supervised learning would be regression analysis
+
+## Question 2: Explain the difference between a regression model and a classification model, specifically in the context of machine learning:
+
+A regression model uses continuous quantative data( or predictors/ x values) to try and predict future responses/ y-values and would be an example of supervised learning because we are given outputs.
+
+A classification model is also an example of supervised learning however here Y is qualitative with categorical values.
+
+## Question 3: Name two commonly used metrics for regression ML problems. Name two commonly used metrics for classification ML problems. For Regression ML problems: Price and time
+
+For Classification ML problems: survived/died and spam/not spam
+
+## Question 4: As discussed, statistical models can be used for different purposes. These purposes can generally be classified into the following three categories. Provide a brief description of each.
+
+-   Descriptive models: This model is used to find a best visual representation of a trend in the data such as a scatter plot as stated in the lecture slides
+
+-   Inferential models: This models aim is to test theories, emphasize significant features of the data and state the relationship between outcome and predictors again stated in lecture slides
+
+-   Predictive models: This model aims to predict Y with the least reducible error possible. Uses different features to fit data to model and is not focused on hypothesis tests
+
+## Question 5: Predictive models are frequently used in machine learning, and they can usually be described as either mechanistic or empirically-driven. Answer the following questions.
+
+-   **Define mechanistic. Define empirically-driven. How do these model types differ? How are they similar?**
+
+Mechanistic uses parametric form to represent the outcomes. This will not match the actual f but we can add parameters in order to better fit the data being careful not to over fit the data by adding too many.
+
+Empirically-driven model types do not assume any form for f but instead require a large amount of data in order to be useful. This model is naturally much more flexible than mechanistic models but both can be flexible by adding more observations/parameters). Both models can be over-fitted
+
+-   **In general, is a mechanistic or empirically-driven model easier to understand? Explain your choice.**
+
+    I think mechanistic models are easier to understand because they depend on the parameters and require knowledge about the observations/data. I am much more use to seeing equations with variables that correlate to entries in the data.
+
+-   **Describe how the bias-variance tradeoff is related to the use of mechanistic or empirically-driven models.**
+
+    The bias-variance tradeoff refers to the fact that a simple model typically has a high bias and low variance where a more flexible model has a low bias and a high variance. So, we must keep this in mind when choosing models because a mechanistic model will typically be less flexible/simple giving high bias and low variance where as an empirically-driven model is more flexible and will give the opposite.
+
+## Question 6: A political candidate's campaign has collected some detailed voter history data from their constituents. The campaign is interested in two questions:
+
+-  Given a voter's profile/data, how likely is it that they will vote in favor of the candidate? 
+
+-   How would a voter's likelihood of support for the candidate change if they had personal contact with the candidate?
+
+### Classify each question as either predictive or inferential. Explain your reasoning for each.
+
+I believe the first question would be predictive as we are trying to predict a result from the data, namely the voters outcome given some parameters about the voter. Here we are not aimed at testing hypothesis.
+
+The second question is inferential because here we are aiming to test a theory, we want to answer the question of how the outcome for a voter would change if we changed/added a parameter. We are trying to make causal claims establishing a relationship between a predictor (personal contact) and an outcome (support for the candidate/ the voters vote).
+
+# Coding Exercise Problems 
 
 install.packages("tidyverse") install.packages("tidymodels") install.packages("ISLR") install.packages("corrplot")
 
@@ -22,7 +78,7 @@ library(corrplot)
 
 ?mpg mpg
 
-# Exercise 1 
+## Exercise 1
 
 ggplot(data = mpg) + geom_histogram(mapping = aes(x = hwy)) -\> can use this or code below
 
@@ -35,7 +91,7 @@ ggplot(mpg, aes(hwy)) + geom_histogram() # creates a histogram
   ## There is also a spike at around 16 mpg
 ```
 
-# Exercise 2
+## Exercise 2
 
 ```{r}
 ggplot(mpg) + geom_point(mapping = aes(x = hwy, y = cty, color = class)) # creates a scatter plot
@@ -45,7 +101,7 @@ ggplot(mpg) + geom_point(mapping = aes(x = hwy, y = cty, color = class)) # creat
   ## Gas efficiency improvement leads to efficiency in the city and highway
 ```
 
-# Exercise 3
+## Exercise 3
 
 ```{r}
 mpg_new = mpg %>% count(manufacturer,sort = T) # created a new data set with a count of each manufacturer
@@ -55,7 +111,7 @@ ggplot(mpg_new, aes(x = reorder(manufacturer, +n), y = n)) + geom_bar(stat = "id
   ## Dodge produced the most cars and Lincoln produced the least
 ```
 
-# Exercise 4
+## Exercise 4
 
 ```{r}
 ggplot(mpg,aes(hwy,cyl)) + geom_boxplot(aes(group = cyl)) # creates boxplot grouped by cyl
@@ -63,7 +119,7 @@ ggplot(mpg,aes(hwy,cyl)) + geom_boxplot(aes(group = cyl)) # creates boxplot grou
   ## I see a pattern as the number of cylinders go down the mpg on the highway goes up 
 ```
 
-# Exercise 5
+## Exercise 5
 
 ```{r}
 mpg_small = mpg %>% 
