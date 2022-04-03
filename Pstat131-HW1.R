@@ -6,6 +6,45 @@ library(tidyverse)
 library(tidymodels)
 library(ISLR)
 
-eval = TRUE
+
 # ?mpg
 mpg
+
+# Exercise 1 
+# ggplot(data = mpg) + geom_histogram(mapping = aes(x = hwy)) -> can use this or below
+
+ggplot(mpg, aes(hwy)) + geom_histogram() # creates a histogram
+
+  ## I see highway on the x-axis and count on the y 
+  ## The histogram goes from 10 to a bit over 40 on the x-axis and about the same on y
+  ## The histogram shows that most cars lie at around 28 mpg on the highway
+  ## There is also a spike at around 16 mpg
+
+# Exercise 2
+ggplot(mpg) + geom_point(mapping = aes(x = hwy, y = cty, color = class)) # creates a scatter plot
+  
+  ## There seems to be a linear relationship between highway and city
+  ## this means that as the city mpg go up so does the highway mpg
+  ## Gas efficiency improvement leads to efficiency in the city and highway
+
+# Exercise 3 
+# was not sure how to reorder bars just using this ggplot(mpg,aes(manufacturer, fill = manufacturer)) + geom_bar() + coord_flip()
+
+mpg_new = mpg %>% count(manufacturer,sort = T) # created a new data set with a count of each manufacturer
+mpg_new
+ggplot(mpg_new, aes(x = reorder(manufacturer, +n), y = n)) + geom_bar(stat = "identity") + coord_flip()
+
+  ## Dodge produced the most cars and Lincoln produced the least
+
+# Exercise 4
+ggplot(mpg,aes(hwy,cyl)) + geom_boxplot(aes(group = cyl))
+
+  ## I see a pattern as the number of cylinders go down the mpg on the highway goes up 
+
+# Exercise 5 count(manufacturer)
+
+
+
+
+
+
